@@ -59,7 +59,7 @@ Magician.createHttp()
     .bind(8080);
 ```
 
-### 生产者与消费者模型
+### 生产者与消费者
 
 ```java
 @WebSocketHandler(path = "/websocket")
