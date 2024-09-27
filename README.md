@@ -62,8 +62,9 @@ Magician.createHttp()
 ### 生产者与消费者
 
 ```java
+// 创建一组生产者与消费者，支持多对多
 MagicianConcurrent.getJobManager()
-        .addProducer(new MagicianProducer() {
+        .addProducer(new MagicianProducer() { // 添加一个生产者（可以添加多个）
             @Override
             public String getId() {
                 return "producerOne";
@@ -72,10 +73,12 @@ MagicianConcurrent.getJobManager()
             @Override
             public void producer() {
                 for(int i=0;i<10;i++){
+                    
+                    // 将数据发布给消费者
                     this.publish(i);
                 }
             }
-        }).addConsumer(new MagicianConsumer() {
+        }).addConsumer(new MagicianConsumer() { // 添加一个消费者（可以添加多个）
             @Override
             public long getExecFrequencyLimit() {
                 return 500;
@@ -83,6 +86,7 @@ MagicianConcurrent.getJobManager()
             
             @Override
             public void doRunner(Object data) {
+                // 处理生产者发来的数据
                 System.out.println(data);
             }
         }).start();
