@@ -62,22 +62,28 @@ Magician.createHttp()
 ### 生产者与消费者
 
 ```java
-@WebSocketHandler(path = "/websocket")
-public class DemoSocketHandler implements WebSocketBaseHandler {
-   
-    @Override
-    public void onOpen(WebSocketSession webSocketSession) {
-     
-    }
-   
-    @Override
-    public void onClose(WebSocketSession webSocketSession) {
-        
-    }
-
-    @Override
-    public void onMessage(WebSocketSession webSocketSession, byte[] message) {
-
-    }
-}
+MagicianConcurrent.getJobManager()
+        .addProducer(new MagicianProducer() {
+            @Override
+            public String getId() {
+                return "producerOne";
+            }
+            
+            @Override
+            public void producer() {
+                for(int i=0;i<10;i++){
+                    this.publish(i);
+                }
+            }
+        }).addConsumer(new MagicianConsumer() {
+            @Override
+            public long getExecFrequencyLimit() {
+                return 500;
+            }
+            
+            @Override
+            public void doRunner(Object data) {
+                System.out.println(data);
+            }
+        }).start();
 ```
