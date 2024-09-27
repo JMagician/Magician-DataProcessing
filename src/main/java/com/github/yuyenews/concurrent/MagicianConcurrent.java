@@ -5,6 +5,7 @@ import com.github.yuyenews.concurrent.processing.ConcurrentProcessingAsync;
 import com.github.yuyenews.concurrent.processing.ConcurrentProcessingSync;
 
 import java.util.concurrent.ThreadFactory;
+import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -30,12 +31,30 @@ public class MagicianConcurrent {
      * @param threadFactory 拒绝策略
      * @return
      */
-    public static ConcurrentProcessingAsync getConcurrentProcessingAsync(int corePoolSize,
-                                                                         int maximumPoolSize,
-                                                                         long keepAliveTime,
-                                                                         TimeUnit unit,
-                                                                         ThreadFactory threadFactory) {
+    public static ConcurrentProcessingAsync getConcurrentProcessingAsync(int corePoolSize, int maximumPoolSize, long keepAliveTime, TimeUnit unit, ThreadFactory threadFactory) {
         return new ConcurrentProcessingAsync(corePoolSize, maximumPoolSize, keepAliveTime, unit, threadFactory);
+    }
+
+    /**
+     * 创建并发执行对象（异步）
+     * @param corePoolSize 核心线程数
+     * @param maximumPoolSize 最大线程数
+     * @param keepAliveTime 最大空闲时间
+     * @param unit 最大空闲时间的单位
+     * @return
+     */
+    public static ConcurrentProcessingAsync getConcurrentProcessingAsync(int corePoolSize, int maximumPoolSize, long keepAliveTime, TimeUnit unit) {
+        return new ConcurrentProcessingAsync(corePoolSize, maximumPoolSize, keepAliveTime, unit);
+    }
+
+    /**
+     * 创建并发执行对象（异步）
+     * @param corePoolSize 核心线程数
+     * @param maximumPoolSize 最大线程数
+     * @return
+     */
+    public static ConcurrentProcessingAsync getConcurrentProcessingAsync(int corePoolSize, int maximumPoolSize) {
+        return new ConcurrentProcessingAsync(corePoolSize, maximumPoolSize, 1, TimeUnit.MINUTES);
     }
 
     /**

@@ -30,6 +30,18 @@ public class ConcurrentProcessingAsync {
                 threadFactory);
     }
 
+    public ConcurrentProcessingAsync(int corePoolSize,
+                                     int maximumPoolSize,
+                                     long keepAliveTime,
+                                     TimeUnit unit) {
+
+        poolExecutor = new ThreadPoolExecutor(corePoolSize,
+                maximumPoolSize,
+                keepAliveTime,
+                unit,
+                new LinkedBlockingQueue<>());
+    }
+
     /**
      * 并发执行器
      */

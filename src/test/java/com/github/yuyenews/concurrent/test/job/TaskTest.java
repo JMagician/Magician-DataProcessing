@@ -1,4 +1,4 @@
-package com.github.yuyenews.concurrent.test;
+package com.github.yuyenews.concurrent.test.job;
 
 import com.github.yuyenews.concurrent.MagicianConcurrent;
 
