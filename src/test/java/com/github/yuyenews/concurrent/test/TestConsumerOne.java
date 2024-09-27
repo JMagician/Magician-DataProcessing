@@ -5,7 +5,7 @@ import com.github.yuyenews.concurrent.job.MagicianConsumer;
 public class TestConsumerOne extends MagicianConsumer {
     @Override
     public long getExecFrequencyLimit() {
-        return 0;
+        return 500;
     }
 
     @Override

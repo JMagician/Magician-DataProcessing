@@ -4,6 +4,11 @@ import com.github.yuyenews.concurrent.job.MagicianConsumer;
 
 public class TestConsumerThree extends MagicianConsumer {
     @Override
+    public long getExecFrequencyLimit() {
+        return 500;
+    }
+
+    @Override
     public void doRunner(Object data) {
         try {
             Thread.sleep(10000);
