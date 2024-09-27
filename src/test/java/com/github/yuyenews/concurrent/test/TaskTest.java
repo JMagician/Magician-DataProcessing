@@ -14,7 +14,8 @@ public class TaskTest {
         TestConsumerTwo two = new TestConsumerTwo();
         TestConsumerThree three = new TestConsumerThree();
 
-        MagicianConcurrent.getJobManager().addProducer(producerOne)
+        MagicianConcurrent.getJobManager()
+                .addProducer(producerOne)
                 .addProducer(producerTwo)
                 .addConsumer(one)
                 .addConsumer(two)

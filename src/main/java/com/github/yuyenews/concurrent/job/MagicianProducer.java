@@ -63,7 +63,7 @@ public abstract class MagicianProducer implements Runnable {
             throw new NullPointerException("");
         }
         for(MagicianConsumer consumer : freeConsumers){
-            consumer.addTask(new DataTask(id, t));
+            consumer.addTask(new TaskData(id, t));
         }
     }
 

@@ -19,7 +19,7 @@ public abstract class MagicianConsumer implements Runnable {
     /**
      * 任务队列
      */
-    private LinkedBlockingQueue<DataTask> blockingQueue;
+    private LinkedBlockingQueue<TaskData> blockingQueue;
 
     /**
      * ID
@@ -63,7 +63,7 @@ public abstract class MagicianConsumer implements Runnable {
      * 添加任务
      * @param task
      */
-    public void addTask(DataTask task){
+    public void addTask(TaskData task){
         this.blockingQueue.add(task);
         this.producerTaskCount.get(task.getProducerId()).incrementAndGet();
     }
@@ -97,7 +97,7 @@ public abstract class MagicianConsumer implements Runnable {
                 pulse(this.id);
 
                 // take一个任务
-                DataTask task = blockingQueue.take();
+                TaskData task = blockingQueue.take();
                 if(task == null){
                     continue;
                 }
@@ -125,7 +125,7 @@ public abstract class MagicianConsumer implements Runnable {
                  * 这个速度如果过快，会导致本while循环过快，从而引起CPU占用率过大，所以必须加以限制
                  *
                  * 千万不要小看这个问题，本人曾经在实战中亲测过，做不做这个限制，CPU的占有率会达到10倍的差距
-                 * 当然了，这跟消费者的业务逻辑还是有一定关系的，具体情况具体处理
+                 * 当然了，这跟消费者的业务逻辑还是有一定关系的，具体情况具体看待
                  *
                  */
                 if((System.currentTimeMillis() - startTime) < execFrequencyLimit){
@@ -141,8 +141,8 @@ public abstract class MagicianConsumer implements Runnable {
      * 执行任务
      * @param task
      */
-    private void execTask(DataTask task){
-        // 本任务对应的生产者在这里面的任务剩余量减少一个
+    private void execTask(TaskData task){
+        // 本任务对应的生产者，投喂到这里面的任务剩余量，减少一个
         AtomicLong taskCount = producerTaskCount.get(task.getProducerId());
         if(taskCount.get() > 0){
             taskCount.decrementAndGet();

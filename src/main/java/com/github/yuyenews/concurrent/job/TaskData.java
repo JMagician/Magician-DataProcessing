@@ -3,7 +3,7 @@ package com.github.yuyenews.concurrent.job;
 /**
  * 任务对象
  */
-public class DataTask {
+public class TaskData {
 
     /**
      * 生产者ID
@@ -15,7 +15,7 @@ public class DataTask {
      */
     private Object data;
 
-    public DataTask(String producerId, Object data){
+    public TaskData(String producerId, Object data){
         this.producerId = producerId;
         this.data = data;
     }
