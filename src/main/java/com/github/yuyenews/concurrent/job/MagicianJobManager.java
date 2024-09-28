@@ -1,6 +1,7 @@
 package com.github.yuyenews.concurrent.job;
 
 import com.github.yuyenews.concurrent.commons.enums.JobEnum;
+import com.github.yuyenews.concurrent.util.StringUtils;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -75,19 +76,18 @@ public class MagicianJobManager {
                 new LinkedBlockingQueue<>());
 
         // 开启消费者线程
+        Map<String, Object> idMap = new HashMap<>();
         for (MagicianConsumer consumer : consumers) {
+            checkId(idMap, consumer.getId());
+
             consumersPoolExecutor.submit(consumer);
         }
 
         // 开启生产者线程
-        Map<String, Object> idMap = new HashMap<>();
+        idMap = new HashMap<>();
         for (MagicianProducer producer : producers) {
 
-            // 这里做了一个校验，防止出现ID相同的生产者
-            if(idMap.get(producer.getId()) != null){
-                throw new Exception("duplicate producer id exists");
-            }
-            idMap.put(producer.getId(), true);
+            checkId(idMap, producer.getId());
 
             producer.addConsumer(consumers);
             producersPoolExecutor.submit(producer);
@@ -95,32 +95,73 @@ public class MagicianJobManager {
     }
 
     /**
-     * 关闭生产者或消费者线程池
-     * @param jobEnum
+     * 校验ID，避免出现相同的ID
+     * @param idMap
+     * @param id
+     * @throws Exception
      */
-    public void shutdown(JobEnum jobEnum) {
-        if (JobEnum.CONSUMER.equals(jobEnum)) {
-            consumersPoolExecutor.shutdown();
-        } else if (JobEnum.PRODUCER.equals(jobEnum)) {
-            producersPoolExecutor.shutdown();
-        } else if (JobEnum.ALL.equals(jobEnum)) {
-            producersPoolExecutor.shutdown();
-            consumersPoolExecutor.shutdown();
+    private void checkId(Map<String, Object> idMap, String id) throws Exception {
+        // 这里做了一个校验，避免出现相同的ID
+        if(idMap.get(id) != null){
+            throw new Exception("duplicate producer id exists");
         }
+        idMap.put(id, true);
     }
 
     /**
      * 立刻关闭生产者或消费者线程池
      * @param jobEnum
      */
-    public void shutdownNow(JobEnum jobEnum) {
+    public void shutdown(JobEnum jobEnum) {
         if (JobEnum.CONSUMER.equals(jobEnum)) {
-            consumersPoolExecutor.shutdownNow();
+            shutdownAllConsumer();
         } else if (JobEnum.PRODUCER.equals(jobEnum)) {
-            producersPoolExecutor.shutdownNow();
+            shutdownAllProducer();
         } else if (JobEnum.ALL.equals(jobEnum)) {
-            producersPoolExecutor.shutdownNow();
-            consumersPoolExecutor.shutdownNow();
+            shutdownAllProducer();
+            shutdownAllConsumer();
         }
+    }
+
+    /**
+     * 停止所有生产者
+     */
+    public void shutdownAllProducer(){
+        shutdownProducer(null);
+    }
+
+    /**
+     * 停止所有消费者
+     */
+    public void shutdownAllConsumer(){
+        shutdownConsumer(null);
+    }
+
+    /**
+     * 停止指定的生产者
+     * @param id
+     */
+    public void shutdownProducer(String id){
+        for(MagicianProducer producer : producers){
+            if(StringUtils.isEmpty(id) || id.equals(producer.getId())){
+                producer.shutDownNow();
+            }
+        }
+
+        producersPoolExecutor.shutdownNow();
+    }
+
+    /**
+     * 停止指定的消费者
+     * @param id
+     */
+    public void shutdownConsumer(String id){
+        for(MagicianConsumer consumer : consumers){
+            if(StringUtils.isEmpty(id) || id.equals(consumer.getId())){
+                consumer.shutDownNow();
+            }
+        }
+
+        consumersPoolExecutor.shutdownNow();
     }
 }

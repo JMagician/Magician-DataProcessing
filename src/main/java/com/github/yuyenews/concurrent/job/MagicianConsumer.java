@@ -1,5 +1,6 @@
 package com.github.yuyenews.concurrent.job;
 
+import com.github.yuyenews.concurrent.util.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -32,6 +33,11 @@ public abstract class MagicianConsumer implements Runnable {
     private long execFrequencyLimit;
 
     /**
+     * 是否要停止
+     */
+    private boolean shutdown;
+
+    /**
      * 每个生产者投喂进来的任务数量（剩余量）
      */
     private Map<String, AtomicLong> producerTaskCount;
@@ -39,10 +45,15 @@ public abstract class MagicianConsumer implements Runnable {
     public MagicianConsumer(){
         this.blockingQueue = new LinkedBlockingQueue<>();
         this.producerTaskCount = new ConcurrentHashMap<>();
-        this.id = UUID.randomUUID().toString();
+        this.shutdown = false;
         this.execFrequencyLimit = getExecFrequencyLimit();
         if(this.execFrequencyLimit < 0){
             this.execFrequencyLimit = 0;
+        }
+
+        this.id = getId();
+        if(StringUtils.isEmpty(this.id)){
+            throw new NullPointerException("consumer id cannot empty");
         }
     }
 
@@ -94,7 +105,7 @@ public abstract class MagicianConsumer implements Runnable {
      */
     @Override
     public void run() {
-        while (true){
+        while (shutdown == false){
             try {
                 // 发送心跳通知
                 pulse(this.id);
@@ -154,6 +165,19 @@ public abstract class MagicianConsumer implements Runnable {
         // 执行任务
         doRunner(task.getData());
     }
+
+    /**
+     * 停止本消费者
+     */
+    public void shutDownNow(){
+        this.shutdown = true;
+    }
+
+    /**
+     * 获取ID
+     * @return
+     */
+    public abstract String getId();
 
     /**
      * 心跳

@@ -4,6 +4,11 @@ import com.github.yuyenews.concurrent.job.MagicianConsumer;
 
 public class TestConsumerOne extends MagicianConsumer {
     @Override
+    public String getId() {
+        return "one";
+    }
+
+    @Override
     public long getExecFrequencyLimit() {
         return 500;
     }

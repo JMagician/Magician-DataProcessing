@@ -1,6 +1,7 @@
 package com.github.yuyenews.concurrent.job;
 
 
+import com.github.yuyenews.concurrent.util.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -46,8 +47,8 @@ public abstract class MagicianProducer implements Runnable {
         this.shutdown = false;
         this.loop = true;
         this.id = getId();
-        if(this.id == null || "".equals(this.id.trim())){
-            this.id = UUID.randomUUID().toString();
+        if(StringUtils.isEmpty(this.id)){
+            throw new NullPointerException("producer id cannot empty");
         }
     }
 
@@ -129,7 +130,7 @@ public abstract class MagicianProducer implements Runnable {
     }
 
     /**
-     * 关闭数据生产
+     * 停止数据生产
      */
     public void shutDownNow(){
         this.shutdown = true;

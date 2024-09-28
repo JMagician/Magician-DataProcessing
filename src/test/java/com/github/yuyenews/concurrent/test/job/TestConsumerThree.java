@@ -3,6 +3,12 @@ package com.github.yuyenews.concurrent.test.job;
 import com.github.yuyenews.concurrent.job.MagicianConsumer;
 
 public class TestConsumerThree extends MagicianConsumer {
+
+    @Override
+    public String getId() {
+        return "three";
+    }
+
     @Override
     public long getExecFrequencyLimit() {
         return 500;
