@@ -148,6 +148,12 @@ MagicianConcurrent.getJobManager()
             }
         }).addConsumer(new MagicianConsumer() { // 添加一个消费者（可以添加多个）
             @Override
+            public String getId() {
+                // 设置ID，必须全局唯一
+                return "consumerOne";
+            }
+        
+            @Override
             public long getExecFrequencyLimit() {
                 // 设置消费频率限制，具体意义可以参考文档
                 return 500;
