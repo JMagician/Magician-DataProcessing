@@ -9,6 +9,11 @@ public class TestProducerOne extends MagicianProducer {
     private static String id = UUID.randomUUID().toString();
 
     @Override
+    public boolean getLoop() {
+        return true;
+    }
+
+    @Override
     public String getId() {
         return id;
     }

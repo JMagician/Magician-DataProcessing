@@ -40,7 +40,10 @@ public abstract class MagicianConsumer implements Runnable {
         this.blockingQueue = new LinkedBlockingQueue<>();
         this.producerTaskCount = new ConcurrentHashMap<>();
         this.id = UUID.randomUUID().toString();
-        setExecFrequencyLimit();
+        this.execFrequencyLimit = getExecFrequencyLimit();
+        if(this.execFrequencyLimit < 0){
+            this.execFrequencyLimit = 0;
+        }
     }
 
     /**
@@ -110,7 +113,6 @@ public abstract class MagicianConsumer implements Runnable {
                 // 执行任务
                 execTask(task);
 
-
                 /*
                  * 如果任务执行的耗时小于execFrequencyLimit，则等待execFrequencyLimit毫秒后再消费下一个任务
                  *
@@ -128,7 +130,7 @@ public abstract class MagicianConsumer implements Runnable {
                  * 当然了，这跟消费者的业务逻辑还是有一定关系的，具体情况具体看待
                  *
                  */
-                if((System.currentTimeMillis() - startTime) < execFrequencyLimit){
+                if(execFrequencyLimit > 0 && (System.currentTimeMillis() - startTime) < execFrequencyLimit){
                     Thread.sleep(execFrequencyLimit);
                 }
             } catch (Exception e){
@@ -151,16 +153,6 @@ public abstract class MagicianConsumer implements Runnable {
 
         // 执行任务
         doRunner(task.getData());
-    }
-
-    /**
-     * 设置执行频率
-     */
-    private void setExecFrequencyLimit(){
-        this.execFrequencyLimit = getExecFrequencyLimit();
-        if(this.execFrequencyLimit < 0){
-            this.execFrequencyLimit = 0;
-        }
     }
 
     /**

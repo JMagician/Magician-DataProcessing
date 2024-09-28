@@ -6,7 +6,7 @@
     <img src="https://img.shields.io/badge/release-master-brightgreen.svg"/>
 </h1>
 
-Magician-Concurrent 是一个并发编程工具包，把需要并发执行的代码传入这个工具包内，线程我们帮您管理
+Magician-Concurrent 是一个并发编程工具包，把需要并发执行的代码传入这个工具包内，我们来帮您管理线程
 
 ## 运行环境
 
@@ -34,29 +34,90 @@ JDK8+
 </dependency>
 ```
 
-### 并发编程
+### 并发处理任务
+
+```java
+MagicianConcurrent.getConcurrentTaskSync()
+                .setTimeout(1000) // 超时时间
+                .setTimeUnit(TimeUnit.MILLISECONDS) // 超时时间的单位
+                .add(() -> { // 添加一个任务
+
+                    // 在这里可以写上任务的业务逻辑
+
+                }, (result, e) -> {
+                    // 此任务处理后的回调
+                    if(result.equals(ConcurrentTaskResultEnum.FAIL)){
+                        // 任务失败，此时e里面有详细的异常信息
+                    } else if(result.equals(ConcurrentTaskResultEnum.SUCCESS)) {
+                        // 任务成功，此时e是空的
+                    }
+                })
+                .add(() -> { // 添加一个任务
+
+                    // 在这里可以写上任务的业务逻辑
+
+                }, (result, e) -> {
+                    // 此任务处理后的回调
+                    if(result.equals(ConcurrentTaskResultEnum.FAIL)){
+                        // 任务失败，此时e里面有详细的异常信息
+                    } else if(result.equals(ConcurrentTaskResultEnum.SUCCESS)) {
+                        // 任务成功，此时e是空的
+                    }
+                })
+                .start();
+```
+
+### 并发处理List里的元素
 
 同步执行
 
 ```java
-@HttpHandler(path="/")
-public class DemoHandler implements HttpBaseHandler {
+// 假如有一个List需要并发处理里面的元素
+List<String> dataList = new ArrayList<>();
 
-    @Override
-    public void request(MagicianRequest magicianRequest, MagicianResponse response) {
-        // response data
-        magicianRequest.getResponse()
-                .sendJson(200, "{'status':'ok'}");
-    }
-}
+// 只需要将他传入syncRunner方法即可，每个参数的具体含义可以参考文档
+MagicianConcurrent.getConcurrentListSync()
+        .syncRunner(dataList, data -> {
+
+            // 这里可以拿到List里的元素，进行处理
+            System.out.println(data);
+        
+        }, 10, 1, TimeUnit.MINUTES);
+
+// 也可以用syncGroupRunner方法，每个参数的具体含义可以参考文档
+MagicianConcurrent.getConcurrentListSync()
+        .syncGroupRunner(dataList, data -> {
+
+            // 这里可以拿到List里的元素，进行处理
+            System.out.println(data);
+        
+        }, 10, 1, TimeUnit.MINUTES);
 ```
 
 异步执行
 
 ```java
-Magician.createHttp()
-    .scan("handler所在的包名")
-    .bind(8080);
+// 假如有一个List需要并发处理里面的元素
+List<String> dataList = new ArrayList<>();
+
+// 只需要将他传入asyncRunner方法即可，每个参数的具体含义可以参考文档
+MagicianConcurrent.getConcurrentListAsync(1, 10, 1, TimeUnit.MINUTES)
+        .asyncRunner(dataList, data -> {
+
+            // 这里可以拿到List里的元素，进行处理
+            System.out.println(data);
+    
+        }, 10, 1, TimeUnit.MINUTES);
+
+
+// 也可以用asyncGroupRunner方法，每个参数的具体含义可以参考文档
+MagicianConcurrent.getConcurrentListAsync(1, 10, 1, TimeUnit.MINUTES)
+        .asyncGroupRunner(dataList, data -> {
+        
+            // 这里可以拿到List里的元素，进行处理
+            System.out.println(data);
+        
+        }, 10, 1, TimeUnit.MINUTES);
 ```
 
 ### 生产者与消费者
@@ -67,7 +128,14 @@ MagicianConcurrent.getJobManager()
         .addProducer(new MagicianProducer() { // 添加一个生产者（可以添加多个）
             @Override
             public String getId() {
+                // 设置ID，必须全局唯一
                 return "producerOne";
+            }
+
+            @Override
+            public boolean getLoop() {
+                // 重复执行producer方法，具体意义可以参考文档
+                return true;
             }
             
             @Override
@@ -81,6 +149,7 @@ MagicianConcurrent.getJobManager()
         }).addConsumer(new MagicianConsumer() { // 添加一个消费者（可以添加多个）
             @Override
             public long getExecFrequencyLimit() {
+                // 设置消费频率限制，具体意义可以参考文档
                 return 500;
             }
             

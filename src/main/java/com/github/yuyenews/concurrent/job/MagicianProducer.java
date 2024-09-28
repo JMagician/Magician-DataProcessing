@@ -35,8 +35,16 @@ public abstract class MagicianProducer implements Runnable {
      */
     private boolean shutdown;
 
+    /**
+     * 是否持续生产
+     * 如果设置为false，那么producer方法只会执行一次，完成后本线程将直接结束
+     * 如果设置为true，那么producer方法会一直循环执行
+     */
+    private boolean loop;
+
     public MagicianProducer(){
         this.shutdown = false;
+        this.loop = true;
         this.id = getId();
         if(this.id == null || "".equals(this.id.trim())){
             this.id = UUID.randomUUID().toString();
@@ -78,6 +86,11 @@ public abstract class MagicianProducer implements Runnable {
             try {
                 // 生产数据，并投喂给消费者
                 producer();
+
+                // 如果loop设置为false，代表只执行一次，所以直接跳出run方法
+                if(loop == false){
+                    return;
+                }
 
                 // 一轮投喂结束后，检测有没有空闲消费者，如果没有就阻塞在这，直到有空闲消费者出现
                 await();
@@ -132,4 +145,13 @@ public abstract class MagicianProducer implements Runnable {
      * 生产数据
      */
     public abstract void producer();
+
+    /**
+     * 是否持续生产
+     * 如果设置为false，那么producer方法只会执行一次，完成后本线程将直接结束
+     * 如果设置为true，那么producer方法会一直循环执行
+     */
+    public boolean getLoop(){
+        return true;
+    }
 }

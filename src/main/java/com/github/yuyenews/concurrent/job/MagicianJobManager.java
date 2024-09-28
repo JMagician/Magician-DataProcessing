@@ -1,6 +1,6 @@
 package com.github.yuyenews.concurrent.job;
 
-import com.github.yuyenews.concurrent.enums.JobEnum;
+import com.github.yuyenews.concurrent.commons.enums.JobEnum;
 
 import java.util.ArrayList;
 import java.util.HashMap;
