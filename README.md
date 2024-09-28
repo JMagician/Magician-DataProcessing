@@ -6,7 +6,8 @@
     <img src="https://img.shields.io/badge/release-master-brightgreen.svg"/>
 </h1>
 
-Magician-Concurrent 是一个并发编程工具包，把需要并发执行的代码传入这个工具包内，我们来帮您管理线程
+Magician-Concurrent 是一个并发编程工具包，当你需要并发执行某些代码的时候，不需要自己创建和管理线程，
+除此之外里面还提供了生产者与消费者模型
 
 ## 运行环境
 
