@@ -91,13 +91,13 @@ public class ConcurrentTaskSync {
 
         CountDownLatch count = new CountDownLatch(concurrentTaskList.size());
 
-        // 将集合里的人物全部添加到线程池
+        // 将集合里的任务全部添加到线程池
         for (ConcurrentTask concurrentTask : concurrentTaskList) {
             poolExecutor.submit(() -> {
                 try {
                     concurrentTask.runnable.run();
                     concurrentTask.concurrentTaskCall.call(ConcurrentTaskResultEnum.SUCCESS, null);
-                } catch (Exception e) {
+                } catch (Throwable e) {
                     logger.error("ConcurrentTaskSync error, className:{}", concurrentTask.runnable.getClass().getName(), e);
                     concurrentTask.concurrentTaskCall.call(ConcurrentTaskResultEnum.FAIL, e);
                 } finally {
@@ -110,8 +110,19 @@ public class ConcurrentTaskSync {
         ProcessingHelper.runnerAwait(timeout, timeUnit, count, poolExecutor);
     }
 
+    /**
+     * 存放任务的实体
+     */
     class ConcurrentTask {
+
+        /**
+         * 任务的业务逻辑
+         */
         private Runnable runnable;
+
+        /**
+         * 回调函数
+         */
         private ConcurrentTaskCall concurrentTaskCall;
 
         public ConcurrentTask(Runnable runnable, ConcurrentTaskCall concurrentTaskCall) {
