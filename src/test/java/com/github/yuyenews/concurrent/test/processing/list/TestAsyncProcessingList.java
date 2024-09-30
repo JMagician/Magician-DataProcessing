@@ -14,7 +14,7 @@ public class TestAsyncProcessingList {
         List<String> dataList = new ArrayList<>();
 
         // 只需要将他传入syncRunner方法即可，每个参数的具体含义可以参考文档
-        MagicianConcurrent.getConcurrentListAsync(1, 10, 1, TimeUnit.MINUTES)
+        MagicianConcurrent.getConcurrentCollectionAsync(1, 10, 1, TimeUnit.MINUTES)
                 .asyncRunner(dataList, data -> {
 
                     // 这里可以拿到List里的元素，进行处理
@@ -24,7 +24,7 @@ public class TestAsyncProcessingList {
 
 
         // 也可以用syncGroupRunner方法，每个参数的具体含义可以参考文档
-        MagicianConcurrent.getConcurrentListAsync(1, 10, 1, TimeUnit.MINUTES)
+        MagicianConcurrent.getConcurrentCollectionAsync(1, 10, 1, TimeUnit.MINUTES)
                 .asyncGroupRunner(dataList, data -> {
 
                     // 这里可以拿到List里的元素，进行处理

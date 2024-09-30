@@ -7,7 +7,6 @@ import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 /**
  * 生产者线程
@@ -37,6 +36,12 @@ public abstract class MagicianProducer implements Runnable {
     private boolean shutdown;
 
     /**
+     * 是否等所有消费者都空了以后，才进行下一轮
+     * 这个配置是跟loop配合使用的，如果loop为fale，那么这个配置将没有意义
+     */
+    private boolean allFree;
+
+    /**
      * 是否持续生产
      * 如果设置为false，那么producer方法只会执行一次，完成后本线程将直接结束
      * 如果设置为true，那么producer方法会一直循环执行
@@ -45,7 +50,8 @@ public abstract class MagicianProducer implements Runnable {
 
     public MagicianProducer(){
         this.shutdown = false;
-        this.loop = true;
+        this.loop = getLoop();
+        this.allFree = getAllFree();
         this.id = getId();
         if(StringUtils.isEmpty(this.id)){
             throw new NullPointerException("producer id cannot empty");
@@ -112,6 +118,9 @@ public abstract class MagicianProducer implements Runnable {
                 for (MagicianConsumer consumer : consumers) {
                     if (consumer.isPending(id)) {
                         freeConsumers.add(consumer);
+                    } else if (allFree) {
+                        freeConsumers = new ArrayList<>();
+                        break;
                     }
                 }
 
@@ -154,5 +163,14 @@ public abstract class MagicianProducer implements Runnable {
      */
     public boolean getLoop(){
         return true;
+    }
+
+    /**
+     * 是否等所有消费者都空了以后，才进行下一轮
+     * 这个配置是跟loop配合使用的，如果loop为fale，那么这个配置将没有意义
+     * @return
+     */
+    public boolean getAllFree(){
+        return false;
     }
 }
