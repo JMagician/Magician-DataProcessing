@@ -29,7 +29,7 @@ public class ConcurrentMapSync {
      * @param <K, V>
      */
     public <K, V> void syncRunner(Map<K, V> dataMap,
-                                  ConcurrentMapRunner concurrentMapRunner) {
+                                  ConcurrentMapRunner<K, V> concurrentMapRunner) {
         syncRunner(dataMap, concurrentMapRunner, 10, 10, TimeUnit.MINUTES);
     }
 
@@ -44,7 +44,7 @@ public class ConcurrentMapSync {
      * @param <K, V>
      */
     public <K, V> void syncRunner(Map<K, V> dataMap,
-                                  ConcurrentMapRunner concurrentMapRunner,
+                                  ConcurrentMapRunner<K, V> concurrentMapRunner,
                                   int groupSize) {
         syncRunner(dataMap, concurrentMapRunner, groupSize, 10, TimeUnit.MINUTES);
     }
@@ -59,7 +59,7 @@ public class ConcurrentMapSync {
      * @param <K, V>
      */
     public <K, V> void syncGroupRunner(Map<K, V> dataMap,
-                                       ConcurrentMapGroupRunner concurrentMapGroupRunner) {
+                                       ConcurrentMapGroupRunner<K, V> concurrentMapGroupRunner) {
         syncGroupRunner(dataMap, concurrentMapGroupRunner, 10, 10, TimeUnit.MINUTES);
     }
 
@@ -74,7 +74,7 @@ public class ConcurrentMapSync {
      * @param <K, V>
      */
     public <K, V> void syncGroupRunner(Map<K, V> dataMap,
-                                       ConcurrentMapGroupRunner concurrentMapGroupRunner,
+                                       ConcurrentMapGroupRunner<K, V> concurrentMapGroupRunner,
                                        int groupSize) {
         syncGroupRunner(dataMap, concurrentMapGroupRunner, groupSize, 10, TimeUnit.MINUTES);
     }
@@ -91,7 +91,7 @@ public class ConcurrentMapSync {
      * @param <K, V>
      */
     public <K, V> void syncGroupRunner(Map<K, V> dataMap,
-                                       ConcurrentMapGroupRunner concurrentMapGroupRunner,
+                                       ConcurrentMapGroupRunner<K, V> concurrentMapGroupRunner,
                                        int groupSize,
                                        long timeout,
                                        TimeUnit unit) {
@@ -100,7 +100,9 @@ public class ConcurrentMapSync {
 
             ThreadPoolExecutor poolExecutor = new ThreadPoolExecutor(dataGroup.size(),
                     dataGroup.size(),
-                    1, TimeUnit.MINUTES, new LinkedBlockingQueue<>());
+                    1,
+                    TimeUnit.MINUTES,
+                    new LinkedBlockingQueue<>());
 
             CountDownLatch count = new CountDownLatch(poolExecutor.getCorePoolSize());
 
@@ -139,7 +141,7 @@ public class ConcurrentMapSync {
      * @param <K, V>
      */
     public <K, V> void syncRunner(Map<K, V> dataMap,
-                                  ConcurrentMapRunner concurrentMapRunner,
+                                  ConcurrentMapRunner<K, V> concurrentMapRunner,
                                   int groupSize,
                                   long timeout,
                                   TimeUnit unit) {
@@ -152,7 +154,9 @@ public class ConcurrentMapSync {
 
                 ThreadPoolExecutor poolExecutor = new ThreadPoolExecutor(dataItem.size(),
                         dataItem.size(),
-                        1, TimeUnit.MINUTES, new LinkedBlockingQueue<>());
+                        1,
+                        TimeUnit.MINUTES,
+                        new LinkedBlockingQueue<>());
 
                 CountDownLatch count = new CountDownLatch(poolExecutor.getCorePoolSize());
 

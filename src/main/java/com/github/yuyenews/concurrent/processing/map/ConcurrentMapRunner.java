@@ -3,7 +3,7 @@ package com.github.yuyenews.concurrent.processing.map;
 /**
  * 执行器，每次执行一条数据
  */
-public interface ConcurrentMapRunner {
+public interface ConcurrentMapRunner<K, V> {
 
-    void run(Object key, Object value);
+    void run(K key, V value);
 }

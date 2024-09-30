@@ -1,4 +1,4 @@
-package com.github.yuyenews.concurrent.test.processing.list;
+package com.github.yuyenews.concurrent.test.processing.collcetion;
 
 import com.github.yuyenews.concurrent.MagicianConcurrent;
 
@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
-public class TestSyncProcessingList {
+public class TestSyncProcessingCollection {
 
     public static void main(String[] args) {
         // 假如有一个List需要并发处理里面的元素

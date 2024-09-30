@@ -24,7 +24,7 @@ public class ConcurrentCollectionSync {
      * 同步执行
      * 默认分成10组，超时时间10分钟
      *
-     * @param dataList             数据集
+     * @param dataList                   数据集
      * @param concurrentCollectionRunner 执行器
      * @param <T>
      */
@@ -38,9 +38,9 @@ public class ConcurrentCollectionSync {
      * 同步执行
      * 默认超时时间10分钟
      *
-     * @param dataList             数据集
+     * @param dataList                   数据集
      * @param concurrentCollectionRunner 执行器
-     * @param groupSize            每组大小，这个大小就决定了会同时开几个线程
+     * @param groupSize                  每组大小，这个大小就决定了会同时开几个线程
      * @param <T>
      */
     public <T> void syncRunner(Collection<T> dataList,
@@ -54,7 +54,7 @@ public class ConcurrentCollectionSync {
      * 同步执行
      * 默认分成10组，超时时间10分钟
      *
-     * @param dataList                  数据集
+     * @param dataList                        数据集
      * @param concurrentCollectionGroupRunner 执行器
      * @param <T>
      */
@@ -68,9 +68,9 @@ public class ConcurrentCollectionSync {
      * 同步执行
      * 默认超时时间10分钟
      *
-     * @param dataList                  数据集
+     * @param dataList                        数据集
      * @param concurrentCollectionGroupRunner 执行器
-     * @param groupSize                 每组大小，这个大小就决定了会同时开几个线程
+     * @param groupSize                       每组大小，这个大小就决定了会同时开几个线程
      * @param <T>
      */
     public <T> void syncGroupRunner(Collection<T> dataList,
@@ -83,11 +83,11 @@ public class ConcurrentCollectionSync {
      * 将一个List分成若干组，每一组分别用一个线程执行
      * 同步执行
      *
-     * @param dataList                  数据集
+     * @param dataList                        数据集
      * @param concurrentCollectionGroupRunner 执行器
-     * @param groupSize                 每组多少条，它关系到能分成多少组，而组数就决定了会同时开几个线程
-     * @param timeout                   每一组的超时时间，单位由unit参数设置
-     * @param unit                      超时时间单位
+     * @param groupSize                       每组多少条，它关系到能分成多少组，而组数就决定了会同时开几个线程
+     * @param timeout                         每一组的超时时间，单位由unit参数设置
+     * @param unit                            超时时间单位
      * @param <T>
      */
     public <T> void syncGroupRunner(Collection<T> dataList,
@@ -102,7 +102,9 @@ public class ConcurrentCollectionSync {
 
             ThreadPoolExecutor poolExecutor = new ThreadPoolExecutor(dataGroup.size(),
                     dataGroup.size(),
-                    1, TimeUnit.MINUTES, new LinkedBlockingQueue<>());
+                    1,
+                    TimeUnit.MINUTES,
+                    new LinkedBlockingQueue<>());
 
             CountDownLatch count = new CountDownLatch(poolExecutor.getCorePoolSize());
 
@@ -131,11 +133,11 @@ public class ConcurrentCollectionSync {
      * 将一个List分成若干组，排队执行，每组内部并发执行
      * 同步执行
      *
-     * @param dataList             数据集
+     * @param dataList                   数据集
      * @param concurrentCollectionRunner 执行器
-     * @param groupSize            每组大小，这个大小就决定了会同时开几个线程
-     * @param timeout              每一组的超时时间，单位由unit参数设置
-     * @param unit                 超时时间单位
+     * @param groupSize                  每组大小，这个大小就决定了会同时开几个线程
+     * @param timeout                    每一组的超时时间，单位由unit参数设置
+     * @param unit                       超时时间单位
      * @param <T>
      */
     public <T> void syncRunner(Collection<T> dataList,
@@ -152,7 +154,9 @@ public class ConcurrentCollectionSync {
 
                 ThreadPoolExecutor poolExecutor = new ThreadPoolExecutor(dataItem.size(),
                         dataItem.size(),
-                        1, TimeUnit.MINUTES, new LinkedBlockingQueue<>());
+                        1,
+                        TimeUnit.MINUTES,
+                        new LinkedBlockingQueue<>());
 
                 CountDownLatch count = new CountDownLatch(poolExecutor.getCorePoolSize());
 
