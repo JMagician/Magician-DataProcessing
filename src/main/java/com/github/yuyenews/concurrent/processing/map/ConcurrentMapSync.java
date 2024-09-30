@@ -26,7 +26,7 @@ public class ConcurrentMapSync {
      *
      * @param dataMap             数据集
      * @param concurrentMapRunner 执行器
-     * @param <K, V>
+     * @param <K,                 V>
      */
     public <K, V> void syncRunner(Map<K, V> dataMap,
                                   ConcurrentMapRunner<K, V> concurrentMapRunner) {
@@ -40,8 +40,8 @@ public class ConcurrentMapSync {
      *
      * @param dataMap             数据集
      * @param concurrentMapRunner 执行器
-     * @param groupSize            每组大小，这个大小就决定了会同时开几个线程
-     * @param <K, V>
+     * @param groupSize           每组大小，这个大小就决定了会同时开几个线程
+     * @param <K,                 V>
      */
     public <K, V> void syncRunner(Map<K, V> dataMap,
                                   ConcurrentMapRunner<K, V> concurrentMapRunner,
@@ -56,7 +56,7 @@ public class ConcurrentMapSync {
      *
      * @param dataMap                  数据集
      * @param concurrentMapGroupRunner 执行器
-     * @param <K, V>
+     * @param <K,                      V>
      */
     public <K, V> void syncGroupRunner(Map<K, V> dataMap,
                                        ConcurrentMapGroupRunner<K, V> concurrentMapGroupRunner) {
@@ -70,8 +70,8 @@ public class ConcurrentMapSync {
      *
      * @param dataMap                  数据集
      * @param concurrentMapGroupRunner 执行器
-     * @param groupSize                 每组大小，这个大小就决定了会同时开几个线程
-     * @param <K, V>
+     * @param groupSize                每组大小，这个大小就决定了会同时开几个线程
+     * @param <K,                      V>
      */
     public <K, V> void syncGroupRunner(Map<K, V> dataMap,
                                        ConcurrentMapGroupRunner<K, V> concurrentMapGroupRunner,
@@ -85,10 +85,10 @@ public class ConcurrentMapSync {
      *
      * @param dataMap                  数据集
      * @param concurrentMapGroupRunner 执行器
-     * @param groupSize                 每组多少条，它关系到能分成多少组，而组数就决定了会同时开几个线程
-     * @param timeout                   每一组的超时时间，单位由unit参数设置
-     * @param unit                      超时时间单位
-     * @param <K, V>
+     * @param groupSize                每组多少条，它关系到能分成多少组，而组数就决定了会同时开几个线程
+     * @param timeout                  每一组的超时时间，单位由unit参数设置
+     * @param unit                     超时时间单位
+     * @param <K,                      V>
      */
     public <K, V> void syncGroupRunner(Map<K, V> dataMap,
                                        ConcurrentMapGroupRunner<K, V> concurrentMapGroupRunner,
@@ -135,10 +135,10 @@ public class ConcurrentMapSync {
      *
      * @param dataMap             数据集
      * @param concurrentMapRunner 执行器
-     * @param groupSize            每组大小，这个大小就决定了会同时开几个线程
-     * @param timeout              每一组的超时时间，单位由unit参数设置
-     * @param unit                 超时时间单位
-     * @param <K, V>
+     * @param groupSize           每组大小，这个大小就决定了会同时开几个线程
+     * @param timeout             每一组的超时时间，单位由unit参数设置
+     * @param unit                超时时间单位
+     * @param <K,                 V>
      */
     public <K, V> void syncRunner(Map<K, V> dataMap,
                                   ConcurrentMapRunner<K, V> concurrentMapRunner,
