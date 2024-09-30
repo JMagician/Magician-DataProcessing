@@ -1,7 +1,6 @@
 package com.github.yuyenews.concurrent.processing.collection;
 
 import java.util.Collection;
-import java.util.List;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.ThreadFactory;
 import java.util.concurrent.ThreadPoolExecutor;
