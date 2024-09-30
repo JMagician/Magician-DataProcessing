@@ -159,14 +159,14 @@ public class ConcurrentCollectionAsync {
     }
 
     /**
-     * 关闭所有线程
+     * 关闭线程池
      */
     public void shutdown() {
         poolExecutor.shutdown();
     }
 
     /**
-     * 立刻关闭所有线程
+     * 立刻关闭线程池
      */
     public void shutdownNow() {
         poolExecutor.shutdownNow();

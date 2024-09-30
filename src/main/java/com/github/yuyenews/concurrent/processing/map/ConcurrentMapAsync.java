@@ -1,8 +1,5 @@
 package com.github.yuyenews.concurrent.processing.map;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import java.util.Map;
 import java.util.concurrent.*;
 
@@ -10,8 +7,6 @@ import java.util.concurrent.*;
  * 并发处理Map里的元素（异步）
  */
 public class ConcurrentMapAsync {
-
-    private Logger logger = LoggerFactory.getLogger(ConcurrentMapAsync.class);
 
     /**
      * 异步执行任务的线程池
@@ -162,14 +157,14 @@ public class ConcurrentMapAsync {
     }
 
     /**
-     * 关闭所有线程
+     * 关闭线程池
      */
     public void shutdown() {
         poolExecutor.shutdown();
     }
 
     /**
-     * 立刻关闭所有线程
+     * 立刻关闭线程池
      */
     public void shutdownNow() {
         poolExecutor.shutdownNow();
