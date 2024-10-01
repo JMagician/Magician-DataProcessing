@@ -7,7 +7,7 @@ import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
 /**
- * 并发处理List里的元素（异步）
+ * 并发处理Collection里的元素（异步）
  */
 public class ConcurrentCollectionAsync {
 
@@ -48,7 +48,7 @@ public class ConcurrentCollectionAsync {
     private ConcurrentCollectionSync concurrentCollectionSync = new ConcurrentCollectionSync();
 
     /**
-     * 将一个List分成若干组，排队执行，每组内部并发执行
+     * 将一个Collection分成若干组，排队执行，每组内部并发执行
      * 异步执行
      * 默认分成10组，超时时间10分钟
      *
@@ -56,13 +56,13 @@ public class ConcurrentCollectionAsync {
      * @param concurrentCollectionRunner 执行器
      * @param <T>
      */
-    public <T> void asyncRunner(Collection<T> dataList,
+    public <T> ThreadPoolExecutor asyncRunner(Collection<T> dataList,
                                 ConcurrentCollectionRunner<T> concurrentCollectionRunner) {
-        asyncRunner(dataList, concurrentCollectionRunner, 10, 10, TimeUnit.MINUTES);
+        return asyncRunner(dataList, concurrentCollectionRunner, 10, 10, TimeUnit.MINUTES);
     }
 
     /**
-     * 将一个List分成若干组，排队执行，每组内部并发执行
+     * 将一个Collection分成若干组，排队执行，每组内部并发执行
      * 异步执行
      * 默认超时时间10分钟
      *
@@ -70,14 +70,14 @@ public class ConcurrentCollectionAsync {
      * @param concurrentCollectionRunner 执行器
      * @param <T>
      */
-    public <T> void asyncRunner(Collection<T> dataList,
+    public <T> ThreadPoolExecutor asyncRunner(Collection<T> dataList,
                                 ConcurrentCollectionRunner<T> concurrentCollectionRunner,
                                 int groupSize) {
-        asyncRunner(dataList, concurrentCollectionRunner, groupSize, 10, TimeUnit.MINUTES);
+        return asyncRunner(dataList, concurrentCollectionRunner, groupSize, 10, TimeUnit.MINUTES);
     }
 
     /**
-     * 将一个List分成若干组，每一组分别用一个线程执行
+     * 将一个Collection分成若干组，每一组分别用一个线程执行
      * 异步执行
      * 默认分成10组，超时时间10分钟
      *
@@ -85,13 +85,13 @@ public class ConcurrentCollectionAsync {
      * @param concurrentCollectionGroupRunner 执行器
      * @param <T>
      */
-    public <T> void asyncGroupRunner(Collection<T> dataList,
+    public <T> ThreadPoolExecutor asyncGroupRunner(Collection<T> dataList,
                                      ConcurrentCollectionGroupRunner<T> concurrentCollectionGroupRunner) {
-        asyncGroupRunner(dataList, concurrentCollectionGroupRunner, 10, 10, TimeUnit.MINUTES);
+        return asyncGroupRunner(dataList, concurrentCollectionGroupRunner, 10, 10, TimeUnit.MINUTES);
     }
 
     /**
-     * 将一个List分成若干组，每一组分别用一个线程执行
+     * 将一个Collection分成若干组，每一组分别用一个线程执行
      * 异步执行
      * 默超时时间10分钟
      *
@@ -99,14 +99,14 @@ public class ConcurrentCollectionAsync {
      * @param concurrentCollectionGroupRunner 执行器
      * @param <T>
      */
-    public <T> void asyncGroupRunner(Collection<T> dataList,
+    public <T> ThreadPoolExecutor asyncGroupRunner(Collection<T> dataList,
                                      ConcurrentCollectionGroupRunner<T> concurrentCollectionGroupRunner,
                                      int groupSize) {
-        asyncGroupRunner(dataList, concurrentCollectionGroupRunner, groupSize, 10, TimeUnit.MINUTES);
+        return asyncGroupRunner(dataList, concurrentCollectionGroupRunner, groupSize, 10, TimeUnit.MINUTES);
     }
 
     /**
-     * 将一个List分成若干组，排队执行，每组内部并发执行
+     * 将一个Collection分成若干组，排队执行，每组内部并发执行
      * 异步执行
      *
      * @param dataList                   数据集
@@ -116,7 +116,7 @@ public class ConcurrentCollectionAsync {
      * @param unit                       超时时间单位
      * @param <T>
      */
-    public <T> void asyncRunner(Collection<T> dataList,
+    public <T> ThreadPoolExecutor asyncRunner(Collection<T> dataList,
                                 ConcurrentCollectionRunner<T> concurrentCollectionRunner,
                                 int groupSize,
                                 long timeout,
@@ -125,10 +125,12 @@ public class ConcurrentCollectionAsync {
         poolExecutor.submit(() -> {
             concurrentCollectionSync.syncRunner(dataList, concurrentCollectionRunner, groupSize, timeout, unit);
         });
+
+        return poolExecutor;
     }
 
     /**
-     * 将一个List分成若干组，每一组分别用一个线程执行
+     * 将一个Collection分成若干组，每一组分别用一个线程执行
      * 异步执行
      *
      * @param dataList                        数据集
@@ -138,7 +140,7 @@ public class ConcurrentCollectionAsync {
      * @param unit                            超时时间单位
      * @param <T>
      */
-    public <T> void asyncGroupRunner(Collection<T> dataList,
+    public <T> ThreadPoolExecutor asyncGroupRunner(Collection<T> dataList,
                                      ConcurrentCollectionGroupRunner<T> concurrentCollectionGroupRunner,
                                      int groupSize,
                                      long timeout,
@@ -147,6 +149,8 @@ public class ConcurrentCollectionAsync {
         poolExecutor.submit(() -> {
             concurrentCollectionSync.syncGroupRunner(dataList, concurrentCollectionGroupRunner, groupSize, timeout, unit);
         });
+
+        return poolExecutor;
     }
 
     /**

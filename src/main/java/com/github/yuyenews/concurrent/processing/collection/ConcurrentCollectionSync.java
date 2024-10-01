@@ -13,14 +13,14 @@ import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
 /**
- * 并发处理List里的元素（同步）
+ * 并发处理Collection里的元素（同步）
  */
 public class ConcurrentCollectionSync {
 
     private Logger logger = LoggerFactory.getLogger(ConcurrentCollectionSync.class);
 
     /**
-     * 将一个List分成若干组，排队执行，每组内部并发执行
+     * 将一个Collection分成若干组，排队执行，每组内部并发执行
      * 同步执行
      * 默认分成10组，超时时间10分钟
      *
@@ -34,7 +34,7 @@ public class ConcurrentCollectionSync {
     }
 
     /**
-     * 将一个List分成若干组，排队执行，每组内部并发执行
+     * 将一个Collection分成若干组，排队执行，每组内部并发执行
      * 同步执行
      * 默认超时时间10分钟
      *
@@ -50,7 +50,7 @@ public class ConcurrentCollectionSync {
     }
 
     /**
-     * 将一个List分成若干组，每一组分别用一个线程执行
+     * 将一个Collection分成若干组，每一组分别用一个线程执行
      * 同步执行
      * 默认分成10组，超时时间10分钟
      *
@@ -64,7 +64,7 @@ public class ConcurrentCollectionSync {
     }
 
     /**
-     * 将一个List分成若干组，每一组分别用一个线程执行
+     * 将一个Collection分成若干组，每一组分别用一个线程执行
      * 同步执行
      * 默认超时时间10分钟
      *
@@ -80,7 +80,7 @@ public class ConcurrentCollectionSync {
     }
 
     /**
-     * 将一个List分成若干组，每一组分别用一个线程执行
+     * 将一个Collection分成若干组，每一组分别用一个线程执行
      * 同步执行
      *
      * @param dataList                        数据集
@@ -130,7 +130,7 @@ public class ConcurrentCollectionSync {
     }
 
     /**
-     * 将一个List分成若干组，排队执行，每组内部并发执行
+     * 将一个Collection分成若干组，排队执行，每组内部并发执行
      * 同步执行
      *
      * @param dataList                   数据集

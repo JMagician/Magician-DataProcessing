@@ -53,9 +53,9 @@ public class ConcurrentMapAsync {
      * @param concurrentMapRunner 执行器
      * @param <K,                 V>
      */
-    public <K, V> void asyncRunner(Map<K, V> dataMap,
+    public <K, V> ThreadPoolExecutor asyncRunner(Map<K, V> dataMap,
                                    ConcurrentMapRunner<K, V> concurrentMapRunner) {
-        asyncRunner(dataMap, concurrentMapRunner, 10, 10, TimeUnit.MINUTES);
+        return asyncRunner(dataMap, concurrentMapRunner, 10, 10, TimeUnit.MINUTES);
     }
 
     /**
@@ -68,10 +68,10 @@ public class ConcurrentMapAsync {
      * @param groupSize           每组大小，这个大小就决定了会同时开几个线程
      * @param <K,                 V>
      */
-    public <K, V> void asyncRunner(Map<K, V> dataMap,
+    public <K, V> ThreadPoolExecutor asyncRunner(Map<K, V> dataMap,
                                    ConcurrentMapRunner<K, V> concurrentMapRunner,
                                    int groupSize) {
-        asyncRunner(dataMap, concurrentMapRunner, groupSize, 10, TimeUnit.MINUTES);
+        return asyncRunner(dataMap, concurrentMapRunner, groupSize, 10, TimeUnit.MINUTES);
     }
 
     /**
@@ -83,9 +83,9 @@ public class ConcurrentMapAsync {
      * @param concurrentMapGroupRunner 执行器
      * @param <K,                      V>
      */
-    public <K, V> void asyncGroupRunner(Map<K, V> dataMap,
+    public <K, V> ThreadPoolExecutor asyncGroupRunner(Map<K, V> dataMap,
                                         ConcurrentMapGroupRunner<K, V> concurrentMapGroupRunner) {
-        asyncGroupRunner(dataMap, concurrentMapGroupRunner, 10, 10, TimeUnit.MINUTES);
+        return asyncGroupRunner(dataMap, concurrentMapGroupRunner, 10, 10, TimeUnit.MINUTES);
     }
 
     /**
@@ -98,10 +98,10 @@ public class ConcurrentMapAsync {
      * @param groupSize                每组大小，这个大小就决定了会同时开几个线程
      * @param <K,                      V>
      */
-    public <K, V> void asyncGroupRunner(Map<K, V> dataMap,
+    public <K, V> ThreadPoolExecutor asyncGroupRunner(Map<K, V> dataMap,
                                         ConcurrentMapGroupRunner<K, V> concurrentMapGroupRunner,
                                         int groupSize) {
-        asyncGroupRunner(dataMap, concurrentMapGroupRunner, groupSize, 10, TimeUnit.MINUTES);
+        return asyncGroupRunner(dataMap, concurrentMapGroupRunner, groupSize, 10, TimeUnit.MINUTES);
     }
 
     /**
@@ -115,7 +115,7 @@ public class ConcurrentMapAsync {
      * @param unit                     超时时间单位
      * @param <K,                      V>
      */
-    public <K, V> void asyncGroupRunner(Map<K, V> dataMap,
+    public <K, V> ThreadPoolExecutor asyncGroupRunner(Map<K, V> dataMap,
                                         ConcurrentMapGroupRunner<K, V> concurrentMapGroupRunner,
                                         int groupSize,
                                         long timeout,
@@ -123,6 +123,8 @@ public class ConcurrentMapAsync {
         poolExecutor.submit(() -> {
             concurrentMapSync.syncGroupRunner(dataMap, concurrentMapGroupRunner, groupSize, timeout, unit);
         });
+
+        return poolExecutor;
     }
 
 
@@ -137,7 +139,7 @@ public class ConcurrentMapAsync {
      * @param unit                超时时间单位
      * @param <K,                 V>
      */
-    public <K, V> void asyncRunner(Map<K, V> dataMap,
+    public <K, V> ThreadPoolExecutor asyncRunner(Map<K, V> dataMap,
                                    ConcurrentMapRunner<K, V> concurrentMapRunner,
                                    int groupSize,
                                    long timeout,
@@ -145,6 +147,8 @@ public class ConcurrentMapAsync {
         poolExecutor.submit(() -> {
             concurrentMapSync.syncRunner(dataMap, concurrentMapRunner, groupSize, timeout, unit);
         });
+
+        return poolExecutor;
     }
 
     /**
