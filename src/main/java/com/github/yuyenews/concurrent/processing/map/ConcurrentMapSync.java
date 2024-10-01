@@ -111,7 +111,7 @@ public class ConcurrentMapSync {
                 poolExecutor.submit(() -> {
                     try {
                         concurrentMapGroupRunner.run(dataItem);
-                    } catch (Exception e) {
+                    } catch (Throwable e) {
                         logger.error("ConcurrentMapSync syncGroupRunner error", e);
                     } finally {
                         count.countDown();
@@ -165,7 +165,7 @@ public class ConcurrentMapSync {
                     poolExecutor.submit(() -> {
                         try {
                             concurrentMapRunner.run(entry.getKey(), entry.getValue());
-                        } catch (Exception e) {
+                        } catch (Throwable e) {
                             logger.error("ConcurrentMapSync syncRunner error", e);
                         } finally {
                             count.countDown();

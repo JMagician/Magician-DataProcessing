@@ -8,5 +8,5 @@ import java.util.Map;
  */
 public interface ConcurrentMapGroupRunner<K, V> {
 
-    void run(Map<K, V> item);
+    void run(Map<K, V> item) throws Throwable;
 }

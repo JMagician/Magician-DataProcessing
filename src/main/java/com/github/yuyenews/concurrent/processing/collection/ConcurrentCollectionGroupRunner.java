@@ -9,5 +9,5 @@ import java.util.Collection;
  */
 public interface ConcurrentCollectionGroupRunner<T> {
 
-    void run(Collection<T> t);
+    void run(Collection<T> t) throws Throwable;
 }

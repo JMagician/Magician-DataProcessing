@@ -68,7 +68,7 @@ MagicianConcurrent.getConcurrentTaskSync()
                 .start();
 ```
 
-### 并发处理List里的元素
+### 并发处理List，Set等所有Collection类集合里的元素
 
 同步执行
 
@@ -77,7 +77,7 @@ MagicianConcurrent.getConcurrentTaskSync()
 List<String> dataList = new ArrayList<>();
 
 // 只需要将他传入syncRunner方法即可，每个参数的具体含义可以参考文档
-MagicianConcurrent.getConcurrentListSync()
+MagicianConcurrent.getConcurrentCollectionSync()
         .syncRunner(dataList, data -> {
 
             // 这里可以拿到List里的元素，进行处理
@@ -86,7 +86,7 @@ MagicianConcurrent.getConcurrentListSync()
         }, 10, 1, TimeUnit.MINUTES);
 
 // 也可以用syncGroupRunner方法，每个参数的具体含义可以参考文档
-MagicianConcurrent.getConcurrentListSync()
+MagicianConcurrent.getConcurrentCollectionSync()
         .syncGroupRunner(dataList, data -> {
 
             // 这里可以拿到List里的元素，进行处理
@@ -102,7 +102,7 @@ MagicianConcurrent.getConcurrentListSync()
 List<String> dataList = new ArrayList<>();
 
 // 只需要将他传入asyncRunner方法即可，每个参数的具体含义可以参考文档
-MagicianConcurrent.getConcurrentListAsync(1, 10, 1, TimeUnit.MINUTES)
+MagicianConcurrent.getConcurrentCollectionAsync(1, 10, 1, TimeUnit.MINUTES)
         .asyncRunner(dataList, data -> {
 
             // 这里可以拿到List里的元素，进行处理
@@ -112,7 +112,7 @@ MagicianConcurrent.getConcurrentListAsync(1, 10, 1, TimeUnit.MINUTES)
 
 
 // 也可以用asyncGroupRunner方法，每个参数的具体含义可以参考文档
-MagicianConcurrent.getConcurrentListAsync(1, 10, 1, TimeUnit.MINUTES)
+MagicianConcurrent.getConcurrentCollectionAsync(1, 10, 1, TimeUnit.MINUTES)
         .asyncGroupRunner(dataList, data -> {
         
             // 这里可以拿到List里的元素，进行处理

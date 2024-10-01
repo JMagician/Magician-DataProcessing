@@ -6,5 +6,5 @@ package com.github.yuyenews.concurrent.processing.collection;
  */
 public interface ConcurrentCollectionRunner<T> {
 
-    void run(T t);
+    void run(T t) throws Throwable;
 }

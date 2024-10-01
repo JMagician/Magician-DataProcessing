@@ -5,5 +5,5 @@ package com.github.yuyenews.concurrent.processing.map;
  */
 public interface ConcurrentMapRunner<K, V> {
 
-    void run(K key, V value);
+    void run(K key, V value) throws Throwable;
 }

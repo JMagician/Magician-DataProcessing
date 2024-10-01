@@ -112,8 +112,8 @@ public class ConcurrentCollectionAsync {
      * @param dataList                   数据集
      * @param concurrentCollectionRunner 执行器
      * @param groupSize                  每组大小，这个大小就决定了会同时开几个线程
-     * @param timeout 每一组的超时时间，单位由unit参数设置
-     * @param unit 超时时间单位
+     * @param timeout                    每一组的超时时间，单位由unit参数设置
+     * @param unit                       超时时间单位
      * @param <T>
      */
     public <T> void asyncRunner(Collection<T> dataList,
@@ -151,6 +151,7 @@ public class ConcurrentCollectionAsync {
 
     /**
      * 获取线程池
+     *
      * @return
      */
     public ThreadPoolExecutor getPoolExecutor() {

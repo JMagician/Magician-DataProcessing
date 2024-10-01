@@ -113,7 +113,7 @@ public class ConcurrentCollectionSync {
                 poolExecutor.submit(() -> {
                     try {
                         concurrentCollectionGroupRunner.run(dataItem);
-                    } catch (Exception e) {
+                    } catch (Throwable e) {
                         logger.error("ConcurrentProcessing syncGroupRunner error", e);
                     } finally {
                         count.countDown();
@@ -165,7 +165,7 @@ public class ConcurrentCollectionSync {
                     poolExecutor.submit(() -> {
                         try {
                             concurrentCollectionRunner.run(item);
-                        } catch (Exception e) {
+                        } catch (Throwable e) {
                             logger.error("ConcurrentProcessing syncRunner error", e);
                         } finally {
                             count.countDown();
