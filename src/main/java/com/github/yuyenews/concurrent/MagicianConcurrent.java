@@ -1,6 +1,6 @@
 package com.github.yuyenews.concurrent;
 
-import com.github.yuyenews.concurrent.job.MagicianJobManager;
+import com.github.yuyenews.concurrent.pac.MagicianProducerAndConsumerManager;
 import com.github.yuyenews.concurrent.processing.collection.ConcurrentCollectionAsync;
 import com.github.yuyenews.concurrent.processing.collection.ConcurrentCollectionSync;
 import com.github.yuyenews.concurrent.processing.map.ConcurrentMapAsync;
@@ -114,8 +114,8 @@ public class MagicianConcurrent {
      * 创建任务生产者、消费者模型对象
      * @return
      */
-    public static MagicianJobManager getJobManager(){
-        return new MagicianJobManager();
+    public static MagicianProducerAndConsumerManager getProducerAndConsumerManager(){
+        return new MagicianProducerAndConsumerManager();
     }
 
 }

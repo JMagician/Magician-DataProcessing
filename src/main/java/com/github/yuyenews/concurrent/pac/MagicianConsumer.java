@@ -1,4 +1,4 @@
-package com.github.yuyenews.concurrent.job;
+package com.github.yuyenews.concurrent.pac;
 
 import com.github.yuyenews.concurrent.util.StringUtils;
 import org.slf4j.Logger;
@@ -74,11 +74,11 @@ public abstract class MagicianConsumer implements Runnable {
 
     /**
      * 添加任务
-     * @param task
+     * @param taskData
      */
-    public void addTask(TaskData task){
-        this.blockingQueue.add(task);
-        this.producerTaskCount.get(task.getProducerId()).incrementAndGet();
+    public void addTask(TaskData taskData){
+        this.blockingQueue.add(taskData);
+        this.producerTaskCount.get(taskData.getProducerId()).incrementAndGet();
     }
 
     /**
@@ -151,18 +151,18 @@ public abstract class MagicianConsumer implements Runnable {
 
     /**
      * 执行任务
-     * @param task
+     * @param taskData
      */
-    private void execTask(TaskData task){
+    private void execTask(TaskData taskData){
         // 本任务对应的生产者，投喂到这里面的任务剩余量，减少一个
-        AtomicLong taskCount = producerTaskCount.get(task.getProducerId());
+        AtomicLong taskCount = producerTaskCount.get(taskData.getProducerId());
         if(taskCount.get() > 0){
             taskCount.decrementAndGet();
-            logger.info("DataConsumer take one, producerId:{}", task.getProducerId());
+            logger.info("MagicianConsumer take one, producerId:{}", taskData.getProducerId());
         }
 
         // 执行任务
-        doRunner(task.getData());
+        doRunner(taskData.getData());
     }
 
     /**
@@ -176,7 +176,9 @@ public abstract class MagicianConsumer implements Runnable {
      * 获取ID
      * @return
      */
-    public abstract String getId();
+    public String getId(){
+        return this.getClass().getName();
+    }
 
     /**
      * 心跳
@@ -188,7 +190,9 @@ public abstract class MagicianConsumer implements Runnable {
      * 获取执行频率
      * @return
      */
-    public abstract long getExecFrequencyLimit();
+    public long getExecFrequencyLimit(){
+        return 10;
+    }
 
     /**
      * 执行任务

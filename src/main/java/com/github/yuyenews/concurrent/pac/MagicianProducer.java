@@ -1,4 +1,4 @@
-package com.github.yuyenews.concurrent.job;
+package com.github.yuyenews.concurrent.pac;
 
 
 import com.github.yuyenews.concurrent.util.StringUtils;
@@ -119,12 +119,16 @@ public abstract class MagicianProducer implements Runnable {
                     if (consumer.isPending(id)) {
                         freeConsumers.add(consumer);
                     } else if (allFree) {
+                        // 如果allFree设置为true，那么只要发现了不空闲的消费者就会继续等待
+                        // 直到所有消费者都空闲了才进行下一轮
                         freeConsumers = new ArrayList<>();
                         break;
                     }
                 }
 
-                // 如果有就结束
+                // 如果这里能拿到空闲的消费者，就直接进行下一轮
+                // 而且生产者发布的数据只会推送到这几个消费者里面
+                // 这是为了照顾消费者的消费能力，如果不管不顾随便投喂，会导致队列积压，造成内存溢出
                 if (freeConsumers.size() > 0) {
                     break;
                 }
@@ -149,7 +153,9 @@ public abstract class MagicianProducer implements Runnable {
      * 获取ID
      * @return
      */
-    public abstract String getId();
+    public String getId(){
+        return this.getClass().getName();
+    }
 
     /**
      * 生产数据

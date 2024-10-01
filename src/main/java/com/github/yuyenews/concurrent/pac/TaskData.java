@@ -1,4 +1,4 @@
-package com.github.yuyenews.concurrent.job;
+package com.github.yuyenews.concurrent.pac;
 
 /**
  * 任务对象

@@ -1,6 +1,6 @@
-package com.github.yuyenews.concurrent.job;
+package com.github.yuyenews.concurrent.pac;
 
-import com.github.yuyenews.concurrent.commons.enums.JobEnum;
+import com.github.yuyenews.concurrent.commons.enums.ProducerAndConsumerEnum;
 import com.github.yuyenews.concurrent.util.StringUtils;
 
 import java.util.ArrayList;
@@ -14,7 +14,7 @@ import java.util.concurrent.TimeUnit;
 /**
  * 任务管理器
  */
-public class MagicianJobManager {
+public class MagicianProducerAndConsumerManager {
 
     /**
      * 消费者集合
@@ -41,7 +41,7 @@ public class MagicianJobManager {
      * @param consumer
      * @return
      */
-    public MagicianJobManager addConsumer(MagicianConsumer consumer) {
+    public MagicianProducerAndConsumerManager addConsumer(MagicianConsumer consumer) {
         consumers.add(consumer);
         return this;
     }
@@ -51,7 +51,7 @@ public class MagicianJobManager {
      * @param producer
      * @return
      */
-    public MagicianJobManager addProducer(MagicianProducer producer) {
+    public MagicianProducerAndConsumerManager addProducer(MagicianProducer producer) {
         producers.add(producer);
         return this;
     }
@@ -110,14 +110,14 @@ public class MagicianJobManager {
 
     /**
      * 立刻关闭生产者或消费者线程池
-     * @param jobEnum
+     * @param producerAndConsumerEnum
      */
-    public void shutdown(JobEnum jobEnum) {
-        if (JobEnum.CONSUMER.equals(jobEnum)) {
+    public void shutdown(ProducerAndConsumerEnum producerAndConsumerEnum) {
+        if (ProducerAndConsumerEnum.CONSUMER.equals(producerAndConsumerEnum)) {
             shutdownAllConsumer();
-        } else if (JobEnum.PRODUCER.equals(jobEnum)) {
+        } else if (ProducerAndConsumerEnum.PRODUCER.equals(producerAndConsumerEnum)) {
             shutdownAllProducer();
-        } else if (JobEnum.ALL.equals(jobEnum)) {
+        } else if (ProducerAndConsumerEnum.ALL.equals(producerAndConsumerEnum)) {
             shutdownAllProducer();
             shutdownAllConsumer();
         }

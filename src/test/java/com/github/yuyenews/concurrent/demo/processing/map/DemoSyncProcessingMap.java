@@ -1,11 +1,11 @@
-package com.github.yuyenews.concurrent.test.processing.map;
+package com.github.yuyenews.concurrent.demo.processing.map;
 
 import com.github.yuyenews.concurrent.MagicianConcurrent;
 
 import java.util.HashMap;
 import java.util.Map;
 
-public class TestsyncProcessingMap {
+public class DemoSyncProcessingMap {
 
     public static void main(String[] args) {
         Map<String, Object> dataMap = new HashMap<>();

@@ -1,11 +1,11 @@
-package com.github.yuyenews.concurrent.test.processing.task;
+package com.github.yuyenews.concurrent.demo.processing.task;
 
 import com.github.yuyenews.concurrent.MagicianConcurrent;
 import com.github.yuyenews.concurrent.commons.enums.ConcurrentTaskResultEnum;
 
 import java.util.concurrent.TimeUnit;
 
-public class TestConcurrentTaskSync {
+public class DemoConcurrentTaskSync {
 
     public static void main(String[] args) {
         MagicianConcurrent.getConcurrentTaskSync()

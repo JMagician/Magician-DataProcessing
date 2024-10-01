@@ -1,18 +1,8 @@
-package com.github.yuyenews.concurrent.test.job;
+package com.github.yuyenews.concurrent.demo.pac;
 
-import com.github.yuyenews.concurrent.job.MagicianConsumer;
+import com.github.yuyenews.concurrent.pac.MagicianConsumer;
 
-public class TestConsumerTwo extends MagicianConsumer {
-
-    @Override
-    public String getId() {
-        return "two";
-    }
-
-    @Override
-    public long getExecFrequencyLimit() {
-        return 500;
-    }
+public class DemoConsumerTwo extends MagicianConsumer {
 
     @Override
     public void doRunner(Object data) {

@@ -127,17 +127,6 @@ MagicianConcurrent.getConcurrentCollectionAsync(1, 10, 1, TimeUnit.MINUTES)
 // 创建一组生产者与消费者，支持多对多
 MagicianConcurrent.getJobManager()
         .addProducer(new MagicianProducer() { // 添加一个生产者（可以添加多个）
-            @Override
-            public String getId() {
-                // 设置ID，必须全局唯一
-                return "producerOne";
-            }
-
-            @Override
-            public boolean getLoop() {
-                // 重复执行producer方法，具体意义可以参考文档
-                return true;
-            }
             
             @Override
             public void producer() {
@@ -147,23 +136,14 @@ MagicianConcurrent.getJobManager()
                     this.publish(i);
                 }
             }
+            
         }).addConsumer(new MagicianConsumer() { // 添加一个消费者（可以添加多个）
-            @Override
-            public String getId() {
-                // 设置ID，必须全局唯一
-                return "consumerOne";
-            }
-        
-            @Override
-            public long getExecFrequencyLimit() {
-                // 设置消费频率限制，具体意义可以参考文档
-                return 500;
-            }
             
             @Override
             public void doRunner(Object data) {
                 // 处理生产者发来的数据
                 System.out.println(data);
             }
+            
         }).start();
 ```

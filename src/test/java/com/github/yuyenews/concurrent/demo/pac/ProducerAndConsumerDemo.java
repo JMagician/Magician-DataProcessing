@@ -1,20 +1,20 @@
-package com.github.yuyenews.concurrent.test.job;
+package com.github.yuyenews.concurrent.demo.pac;
 
 import com.github.yuyenews.concurrent.MagicianConcurrent;
 
 
-public class TaskTest {
+public class ProducerAndConsumerDemo {
 
     public static void main(String[] args) throws Exception {
 
-        TestProducerOne producerOne = new TestProducerOne();
-        TestProducerTwo producerTwo = new TestProducerTwo();
+        DemoProducerOne producerOne = new DemoProducerOne();
+        DemoProducerTwo producerTwo = new DemoProducerTwo();
 
-        TestConsumerOne one = new TestConsumerOne();
-        TestConsumerTwo two = new TestConsumerTwo();
-        TestConsumerThree three = new TestConsumerThree();
+        DemoConsumerOne one = new DemoConsumerOne();
+        DemoConsumerTwo two = new DemoConsumerTwo();
+        DemoConsumerThree three = new DemoConsumerThree();
 
-        MagicianConcurrent.getJobManager()
+        MagicianConcurrent.getProducerAndConsumerManager()
                 .addProducer(producerOne)
                 .addProducer(producerTwo)
                 .addConsumer(one)

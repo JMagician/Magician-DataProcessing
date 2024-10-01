@@ -1,18 +1,11 @@
-package com.github.yuyenews.concurrent.test.job;
+package com.github.yuyenews.concurrent.demo.pac;
 
-import com.github.yuyenews.concurrent.job.MagicianProducer;
+import com.github.yuyenews.concurrent.pac.MagicianProducer;
 
 import java.util.ArrayList;
 import java.util.UUID;
 
-public class TestProducerTwo extends MagicianProducer {
-
-    private static String id = UUID.randomUUID().toString();
-
-    @Override
-    public String getId() {
-        return id;
-    }
+public class DemoProducerTwo extends MagicianProducer {
 
     @Override
     public void producer() {
