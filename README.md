@@ -15,7 +15,7 @@ JDK8+
 
 ## 文档
 
-[https://magician-io.com](https://magician-io.com)
+[https://magician-io.com/concurrent](https://magician-io.com/concurrent)
 
 ## 示例
 
