@@ -119,7 +119,7 @@ public class ConcurrentMapSync {
                 });
             }
 
-            // 等所有线程执行结束后，或者超时后，再执行下一组
+            // 等所有线程执行结束后，或者超时后，再跳出此方法
             ProcessingHelper.runnerAwait(timeout, unit, count, poolExecutor);
 
         } catch (Exception e) {

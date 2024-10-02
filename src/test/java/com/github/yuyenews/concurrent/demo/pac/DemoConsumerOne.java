@@ -14,10 +14,10 @@ public class DemoConsumerOne extends MagicianConsumer {
         try {
             Thread.sleep(1000);
 
-//            System.out.println("dataType: " + data + "_" + data.getClass().getSimpleName());
-//            System.out.println("taskCount: " + this.getTaskCount());
-//            System.out.println("data:" + data);
-//            System.out.println("------------------------------------------------");
+            System.out.println("dataType: " + data + "_" + data.getClass().getSimpleName());
+            System.out.println("taskCount: " + this.getTaskCount());
+            System.out.println("data:" + data);
+            System.out.println("------------------------------------------------");
         } catch (Exception e) {
             e.printStackTrace();
         }

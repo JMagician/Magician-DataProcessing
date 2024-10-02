@@ -1,6 +1,10 @@
 package com.github.yuyenews.concurrent.demo.pac;
 
 import com.github.yuyenews.concurrent.MagicianConcurrent;
+import com.github.yuyenews.concurrent.pac.MagicianConsumer;
+import com.github.yuyenews.concurrent.pac.MagicianProducer;
+
+import java.util.List;
 
 
 public class ProducerAndConsumerDemo {
@@ -40,5 +44,6 @@ public class ProducerAndConsumerDemo {
         while (true){
             Thread.sleep(10000000000L);
         }
+
     }
 }

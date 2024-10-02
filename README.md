@@ -26,13 +26,6 @@ JDK8+
     <artifactId>Magician-Concurrent</artifactId>
     <version>1.0.0</version>
 </dependency>
-
-<!-- This is the logging package, you must have it or the console will not see anything, any logging package that can bridge with slf4j is supported -->
-<dependency>
-    <groupId>org.slf4j</groupId>
-    <artifactId>slf4j-jdk14</artifactId>
-    <version>1.7.12</version>
-</dependency>
 ```
 
 ### 并发处理任务
@@ -125,16 +118,16 @@ MagicianConcurrent.getConcurrentCollectionAsync(1, 10, 1, TimeUnit.MINUTES)
 
 ```java
 // 创建一组生产者与消费者，支持多对多
-MagicianConcurrent.getJobManager()
+MagicianConcurrent.getProducerAndConsumerManager()
         .addProducer(new MagicianProducer() { // 添加一个生产者（可以添加多个）
             
             @Override
             public void producer() {
-                for(int i=0;i<10;i++){
-                    
-                    // 将数据发布给消费者
-                    this.publish(i);
-                }
+                // 查询这张表里符合条件的数据
+                List<Object> dataList = selectList();
+        
+                // 然后将他推送给消费者
+                this.publish(dataList);
             }
             
         }).addConsumer(new MagicianConsumer() { // 添加一个消费者（可以添加多个）

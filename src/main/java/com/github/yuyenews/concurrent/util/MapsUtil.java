@@ -33,7 +33,7 @@ public class MapsUtil {
     }
 
     /**
-     * 价格dataMap 分成 若干组，每组size条
+     * 将dataMap 分成 若干组，每组size条
      * @param dataMap 需要分组的Map
      * @param size 每组分多少条
      * @return
@@ -42,7 +42,7 @@ public class MapsUtil {
      */
     public static <K, V> List<Map<K, V>> partition(Map<K, V> dataMap, int size) {
         if(isEmpty(dataMap)){
-            throw new NullPointerException("dataMap is null");
+            throw new NullPointerException("dataMap is empty");
         }
         if(size <= 0){
             throw new IllegalArgumentException("size cannot <= 0");
@@ -62,6 +62,10 @@ public class MapsUtil {
 
             mapGroup = new HashMap<>();
             mapGroup.put(entry.getKey(), entry.getValue());
+        }
+
+        if(mapGroup.size() > 0){
+            dataList.add(mapGroup);
         }
 
         return dataList;
