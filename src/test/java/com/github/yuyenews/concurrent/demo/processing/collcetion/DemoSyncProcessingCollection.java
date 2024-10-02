@@ -23,8 +23,11 @@ public class DemoSyncProcessingCollection {
         // 也可以用syncGroupRunner方法，每个参数的具体含义可以参考文档
         MagicianConcurrent.getConcurrentCollectionSync().syncGroupRunner(dataList, data -> {
 
-            // 这里可以拿到List里的元素，进行处理
-            System.out.println(data);
+            // 这里是每一组List
+            for(String item : data){
+                // 这里可以拿到List里的元素，进行处理
+                System.out.println(data);
+            }
 
         }, 10, 1, TimeUnit.MINUTES);
     }

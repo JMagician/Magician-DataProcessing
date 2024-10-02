@@ -82,8 +82,11 @@ MagicianConcurrent.getConcurrentCollectionSync()
 MagicianConcurrent.getConcurrentCollectionSync()
         .syncGroupRunner(dataList, data -> {
 
-            // 这里可以拿到List里的元素，进行处理
-            System.out.println(data);
+            // 这里是每一组List
+            for(String item : data){
+                // 这里可以拿到List里的元素，进行处理
+                System.out.println(data);
+            }
         
         }, 10, 1, TimeUnit.MINUTES);
 ```
@@ -107,9 +110,12 @@ MagicianConcurrent.getConcurrentCollectionAsync(1, 10, 1, TimeUnit.MINUTES)
 // 也可以用asyncGroupRunner方法，每个参数的具体含义可以参考文档
 MagicianConcurrent.getConcurrentCollectionAsync(1, 10, 1, TimeUnit.MINUTES)
         .asyncGroupRunner(dataList, data -> {
-        
-            // 这里可以拿到List里的元素，进行处理
-            System.out.println(data);
+
+            // 这里是每一组List
+            for(String item : data){
+                // 这里可以拿到List里的元素，进行处理
+                System.out.println(data);
+            }
         
         }, 10, 1, TimeUnit.MINUTES);
 ```
