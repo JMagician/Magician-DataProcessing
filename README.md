@@ -1,13 +1,12 @@
 <h1> 
-    <a href="https://magician-io.com">Magician-Concurrent</a> ·
+    <a href="https://magician-io.com">Magician-DataProcessing</a> ·
     <img src="https://img.shields.io/badge/licenes-MIT-brightgreen.svg"/>
     <img src="https://img.shields.io/badge/jdk-8+-brightgreen.svg"/>
     <img src="https://img.shields.io/badge/maven-3.5.4+-brightgreen.svg"/>
     <img src="https://img.shields.io/badge/release-master-brightgreen.svg"/>
 </h1>
 
-Magician-Concurrent 是一个并发编程工具包，当你需要并发执行某些代码的时候，不需要自己创建和管理线程，
-除此之外里面还提供了生产者与消费者模型
+Magician-DataProcessing 是一个用Java开发的数据处理框架，支持并发处理以及生产者与消费者模型
 
 ## 运行环境
 
@@ -23,7 +22,7 @@ JDK8+
 ```xml
 <dependency>
     <groupId>com.github.yuyenews</groupId>
-    <artifactId>Magician-Concurrent</artifactId>
+    <artifactId>Magician-DataProcessing</artifactId>
     <version>1.0.0</version>
 </dependency>
 ```
@@ -31,7 +30,7 @@ JDK8+
 ### 并发处理任务
 
 ```java
-MagicianConcurrent.getConcurrentTaskSync()
+MagicianDataProcessing.getConcurrentTaskSync()
                 .setTimeout(1000) // 超时时间
                 .setTimeUnit(TimeUnit.MILLISECONDS) // 超时时间的单位
                 .add(() -> { // 添加一个任务
@@ -70,7 +69,7 @@ MagicianConcurrent.getConcurrentTaskSync()
 List<String> dataList = new ArrayList<>();
 
 // 只需要将他传入syncRunner方法即可，每个参数的具体含义可以参考文档
-MagicianConcurrent.getConcurrentCollectionSync()
+MagicianDataProcessing.getConcurrentCollectionSync()
         .syncRunner(dataList, data -> {
 
             // 这里可以拿到List里的元素，进行处理
@@ -79,7 +78,7 @@ MagicianConcurrent.getConcurrentCollectionSync()
         }, 10, 1, TimeUnit.MINUTES);
 
 // 也可以用syncGroupRunner方法，每个参数的具体含义可以参考文档
-MagicianConcurrent.getConcurrentCollectionSync()
+MagicianDataProcessing.getConcurrentCollectionSync()
         .syncGroupRunner(dataList, data -> {
 
             // 这里是每一组List
@@ -98,7 +97,7 @@ MagicianConcurrent.getConcurrentCollectionSync()
 List<String> dataList = new ArrayList<>();
 
 // 只需要将他传入asyncRunner方法即可，每个参数的具体含义可以参考文档
-MagicianConcurrent.getConcurrentCollectionAsync(1, 10, 1, TimeUnit.MINUTES)
+MagicianDataProcessing.getConcurrentCollectionAsync(1, 10, 1, TimeUnit.MINUTES)
         .asyncRunner(dataList, data -> {
 
             // 这里可以拿到List里的元素，进行处理
@@ -108,7 +107,7 @@ MagicianConcurrent.getConcurrentCollectionAsync(1, 10, 1, TimeUnit.MINUTES)
 
 
 // 也可以用asyncGroupRunner方法，每个参数的具体含义可以参考文档
-MagicianConcurrent.getConcurrentCollectionAsync(1, 10, 1, TimeUnit.MINUTES)
+MagicianDataProcessing.getConcurrentCollectionAsync(1, 10, 1, TimeUnit.MINUTES)
         .asyncGroupRunner(dataList, data -> {
 
             // 这里是每一组List
@@ -124,7 +123,7 @@ MagicianConcurrent.getConcurrentCollectionAsync(1, 10, 1, TimeUnit.MINUTES)
 
 ```java
 // 创建一组生产者与消费者，支持多对多
-MagicianConcurrent.getProducerAndConsumerManager()
+MagicianDataProcessing.getProducerAndConsumerManager()
         .addProducer(new MagicianProducer() { // 添加一个生产者（可以添加多个）
             
             @Override
