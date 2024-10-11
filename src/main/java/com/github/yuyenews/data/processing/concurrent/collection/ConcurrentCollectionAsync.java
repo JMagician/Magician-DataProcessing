@@ -1,10 +1,11 @@
 package com.github.yuyenews.data.processing.concurrent.collection;
 
+import com.github.yuyenews.data.processing.commons.helper.ProcessingHelper;
+
+import java.util.ArrayList;
 import java.util.Collection;
-import java.util.concurrent.LinkedBlockingQueue;
-import java.util.concurrent.ThreadFactory;
-import java.util.concurrent.ThreadPoolExecutor;
-import java.util.concurrent.TimeUnit;
+import java.util.List;
+import java.util.concurrent.*;
 
 /**
  * 并发处理Collection里的元素（异步）
@@ -12,34 +13,12 @@ import java.util.concurrent.TimeUnit;
 public class ConcurrentCollectionAsync {
 
     /**
-     * 异步执行任务的线程池
+     * 异步任务集合
      */
-    private ThreadPoolExecutor poolExecutor;
+    private List<Runnable> runnableList;
 
-    public ConcurrentCollectionAsync(int corePoolSize,
-                                     int maximumPoolSize,
-                                     long keepAliveTime,
-                                     TimeUnit unit,
-                                     ThreadFactory threadFactory) {
-
-        poolExecutor = new ThreadPoolExecutor(corePoolSize,
-                maximumPoolSize,
-                keepAliveTime,
-                unit,
-                new LinkedBlockingQueue<>(),
-                threadFactory);
-    }
-
-    public ConcurrentCollectionAsync(int corePoolSize,
-                                     int maximumPoolSize,
-                                     long keepAliveTime,
-                                     TimeUnit unit) {
-
-        poolExecutor = new ThreadPoolExecutor(corePoolSize,
-                maximumPoolSize,
-                keepAliveTime,
-                unit,
-                new LinkedBlockingQueue<>());
+    public ConcurrentCollectionAsync() {
+        runnableList = new ArrayList<>();
     }
 
     /**
@@ -56,7 +35,7 @@ public class ConcurrentCollectionAsync {
      * @param concurrentCollectionRunner 执行器
      * @param <T>
      */
-    public <T> ThreadPoolExecutor asyncRunner(Collection<T> dataList,
+    public <T> ConcurrentCollectionAsync asyncRunner(Collection<T> dataList,
                                 ConcurrentCollectionRunner<T> concurrentCollectionRunner) {
         return asyncRunner(dataList, concurrentCollectionRunner, 10, 10, TimeUnit.MINUTES);
     }
@@ -70,7 +49,7 @@ public class ConcurrentCollectionAsync {
      * @param concurrentCollectionRunner 执行器
      * @param <T>
      */
-    public <T> ThreadPoolExecutor asyncRunner(Collection<T> dataList,
+    public <T> ConcurrentCollectionAsync asyncRunner(Collection<T> dataList,
                                 ConcurrentCollectionRunner<T> concurrentCollectionRunner,
                                 int groupSize) {
         return asyncRunner(dataList, concurrentCollectionRunner, groupSize, 10, TimeUnit.MINUTES);
@@ -85,7 +64,7 @@ public class ConcurrentCollectionAsync {
      * @param concurrentCollectionGroupRunner 执行器
      * @param <T>
      */
-    public <T> ThreadPoolExecutor asyncGroupRunner(Collection<T> dataList,
+    public <T> ConcurrentCollectionAsync asyncGroupRunner(Collection<T> dataList,
                                      ConcurrentCollectionGroupRunner<T> concurrentCollectionGroupRunner) {
         return asyncGroupRunner(dataList, concurrentCollectionGroupRunner, 10, 10, TimeUnit.MINUTES);
     }
@@ -99,7 +78,7 @@ public class ConcurrentCollectionAsync {
      * @param concurrentCollectionGroupRunner 执行器
      * @param <T>
      */
-    public <T> ThreadPoolExecutor asyncGroupRunner(Collection<T> dataList,
+    public <T> ConcurrentCollectionAsync asyncGroupRunner(Collection<T> dataList,
                                      ConcurrentCollectionGroupRunner<T> concurrentCollectionGroupRunner,
                                      int groupSize) {
         return asyncGroupRunner(dataList, concurrentCollectionGroupRunner, groupSize, 10, TimeUnit.MINUTES);
@@ -116,17 +95,17 @@ public class ConcurrentCollectionAsync {
      * @param unit                       超时时间单位
      * @param <T>
      */
-    public <T> ThreadPoolExecutor asyncRunner(Collection<T> dataList,
+    public <T> ConcurrentCollectionAsync asyncRunner(Collection<T> dataList,
                                 ConcurrentCollectionRunner<T> concurrentCollectionRunner,
                                 int groupSize,
                                 long timeout,
                                 TimeUnit unit) {
 
-        poolExecutor.submit(() -> {
+        runnableList.add(() -> {
             concurrentCollectionSync.syncRunner(dataList, concurrentCollectionRunner, groupSize, timeout, unit);
         });
 
-        return poolExecutor;
+        return this;
     }
 
     /**
@@ -140,39 +119,23 @@ public class ConcurrentCollectionAsync {
      * @param unit                            超时时间单位
      * @param <T>
      */
-    public <T> ThreadPoolExecutor asyncGroupRunner(Collection<T> dataList,
+    public <T> ConcurrentCollectionAsync asyncGroupRunner(Collection<T> dataList,
                                      ConcurrentCollectionGroupRunner<T> concurrentCollectionGroupRunner,
                                      int groupSize,
                                      long timeout,
                                      TimeUnit unit) {
 
-        poolExecutor.submit(() -> {
+        runnableList.add(() -> {
             concurrentCollectionSync.syncGroupRunner(dataList, concurrentCollectionGroupRunner, groupSize, timeout, unit);
         });
 
-        return poolExecutor;
+        return this;
     }
 
     /**
-     * 获取线程池
-     *
-     * @return
+     * 启动所有异步任务
      */
-    public ThreadPoolExecutor getPoolExecutor() {
-        return poolExecutor;
-    }
-
-    /**
-     * 关闭线程池
-     */
-    public void shutdown() {
-        poolExecutor.shutdown();
-    }
-
-    /**
-     * 立刻关闭线程池
-     */
-    public void shutdownNow() {
-        poolExecutor.shutdownNow();
+    public void start(){
+        ProcessingHelper.start(runnableList);
     }
 }

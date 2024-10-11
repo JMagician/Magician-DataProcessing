@@ -10,19 +10,14 @@ public class DemoAsyncProcessingMap {
 
     public static void main(String[] args) {
         Map<String, Object> dataMap = new HashMap<>();
+        dataMap.put("a", "aa");
 
-        MagicianDataProcessing.getConcurrentMapAsync(1,
-                1,
-                1,
-                TimeUnit.MINUTES).asyncRunner(dataMap, (key, value) -> {
+        MagicianDataProcessing.getConcurrentMapAsync().asyncRunner(dataMap, (key, value) -> {
+            System.out.println(key + "-" + value);
+        }).start();
 
-        });
-
-        MagicianDataProcessing.getConcurrentMapAsync(1,
-                1,
-                1,
-                TimeUnit.MINUTES).asyncGroupRunner(dataMap, data -> {
-
-        });
+        MagicianDataProcessing.getConcurrentMapAsync().asyncGroupRunner(dataMap, data -> {
+            System.out.println(data);
+        }).start();
     }
 }

@@ -23,7 +23,7 @@ JDK8+
 <dependency>
     <groupId>com.github.yuyenews</groupId>
     <artifactId>Magician-DataProcessing</artifactId>
-    <version>1.0.0</version>
+    <version>1.0.1</version>
 </dependency>
 ```
 
@@ -97,17 +97,17 @@ MagicianDataProcessing.getConcurrentCollectionSync()
 List<String> dataList = new ArrayList<>();
 
 // 只需要将他传入asyncRunner方法即可，每个参数的具体含义可以参考文档
-MagicianDataProcessing.getConcurrentCollectionAsync(1, 10, 1, TimeUnit.MINUTES)
+MagicianDataProcessing.getConcurrentCollectionAsync()
         .asyncRunner(dataList, data -> {
 
             // 这里可以拿到List里的元素，进行处理
             System.out.println(data);
     
-        }, 10, 1, TimeUnit.MINUTES);
-
+        }, 10, 1, TimeUnit.MINUTES)
+        .start();
 
 // 也可以用asyncGroupRunner方法，每个参数的具体含义可以参考文档
-MagicianDataProcessing.getConcurrentCollectionAsync(1, 10, 1, TimeUnit.MINUTES)
+MagicianDataProcessing.getConcurrentCollectionAsync()
         .asyncGroupRunner(dataList, data -> {
 
             // 这里是每一组List
@@ -116,7 +116,8 @@ MagicianDataProcessing.getConcurrentCollectionAsync(1, 10, 1, TimeUnit.MINUTES)
                 System.out.println(data);
             }
         
-        }, 10, 1, TimeUnit.MINUTES);
+        }, 10, 1, TimeUnit.MINUTES)
+        .start();
 ```
 
 ### 生产者与消费者

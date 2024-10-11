@@ -15,23 +15,25 @@ public class DemoAsyncProcessingCollection {
         dataList.add("a");
 
         // 只需要将他传入syncRunner方法即可，每个参数的具体含义可以参考文档
-        MagicianDataProcessing.getConcurrentCollectionAsync(1, 10, 1, TimeUnit.MINUTES)
+        MagicianDataProcessing.getConcurrentCollectionAsync()
                 .asyncRunner(dataList, data -> {
 
                     // 这里可以拿到List里的元素，进行处理
                     System.out.println(data);
 
-                }, 10, 1, TimeUnit.MINUTES);
+                }, 10, 1, TimeUnit.MINUTES)
+                .start();
 
 
         // 也可以用syncGroupRunner方法，每个参数的具体含义可以参考文档
-        MagicianDataProcessing.getConcurrentCollectionAsync(1, 10, 1, TimeUnit.MINUTES)
+        MagicianDataProcessing.getConcurrentCollectionAsync()
                 .asyncGroupRunner(dataList, data -> {
 
                     // 这里可以拿到List里的元素，进行处理
                     System.out.println(data);
 
-                }, 10, 1, TimeUnit.MINUTES);
+                }, 10, 1, TimeUnit.MINUTES)
+                .start();
 
         System.out.println(1);
     }

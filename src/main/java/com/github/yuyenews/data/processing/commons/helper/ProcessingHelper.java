@@ -1,9 +1,12 @@
 package com.github.yuyenews.data.processing.commons.helper;
 
+import com.github.yuyenews.data.processing.util.CollectionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.List;
 import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
@@ -34,5 +37,39 @@ public class ProcessingHelper {
 
         // 不管是超时未完成，还是已经执行完了，都要释放线程池
         poolExecutor.shutdownNow();
+    }
+
+    /**
+     * 执行所有线程
+     * @param runnableList
+     */
+    public static void start(List<Runnable> runnableList){
+        if(CollectionUtils.isEmpty(runnableList)){
+            throw new NullPointerException("runnableList is empty");
+        }
+
+        ThreadPoolExecutor poolExecutor = null;
+
+        try {
+            poolExecutor = new ThreadPoolExecutor(
+                    runnableList.size(),
+                    runnableList.size(),
+                    1,
+                    TimeUnit.MINUTES,
+                    new LinkedBlockingQueue<>()
+            );
+
+            for(Runnable runnable : runnableList){
+                poolExecutor.submit(runnable);
+            }
+        } catch (Exception e){
+            throw e;
+        } finally {
+            if(poolExecutor == null) {
+                return;
+            }
+
+            poolExecutor.shutdown();
+        }
     }
 }

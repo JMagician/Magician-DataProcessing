@@ -26,37 +26,10 @@ public class MagicianDataProcessing {
 
     /**
      * 创建Collection并发执行对象（异步）
-     * @param corePoolSize 核心线程数
-     * @param maximumPoolSize 最大线程数
-     * @param keepAliveTime 最大空闲时间
-     * @param unit 最大空闲时间的单位
-     * @param threadFactory 拒绝策略
      * @return
      */
-    public static ConcurrentCollectionAsync getConcurrentCollectionAsync(int corePoolSize, int maximumPoolSize, long keepAliveTime, TimeUnit unit, ThreadFactory threadFactory) {
-        return new ConcurrentCollectionAsync(corePoolSize, maximumPoolSize, keepAliveTime, unit, threadFactory);
-    }
-
-    /**
-     * 创建Collection并发执行对象（异步）
-     * @param corePoolSize 核心线程数
-     * @param maximumPoolSize 最大线程数
-     * @param keepAliveTime 最大空闲时间
-     * @param unit 最大空闲时间的单位
-     * @return
-     */
-    public static ConcurrentCollectionAsync getConcurrentCollectionAsync(int corePoolSize, int maximumPoolSize, long keepAliveTime, TimeUnit unit) {
-        return new ConcurrentCollectionAsync(corePoolSize, maximumPoolSize, keepAliveTime, unit);
-    }
-
-    /**
-     * 创建Collection并发执行对象（异步）
-     * @param corePoolSize 核心线程数
-     * @param maximumPoolSize 最大线程数
-     * @return
-     */
-    public static ConcurrentCollectionAsync getConcurrentCollectionAsync(int corePoolSize, int maximumPoolSize) {
-        return new ConcurrentCollectionAsync(corePoolSize, maximumPoolSize, 1, TimeUnit.MINUTES);
+    public static ConcurrentCollectionAsync getConcurrentCollectionAsync() {
+        return new ConcurrentCollectionAsync();
     }
 
     /**
@@ -69,37 +42,10 @@ public class MagicianDataProcessing {
 
     /**
      * 创建Map并发执行对象（异步）
-     * @param corePoolSize 核心线程数
-     * @param maximumPoolSize 最大线程数
-     * @param keepAliveTime 最大空闲时间
-     * @param unit 最大空闲时间的单位
-     * @param threadFactory 拒绝策略
      * @return
      */
-    public static ConcurrentMapAsync getConcurrentMapAsync(int corePoolSize, int maximumPoolSize, long keepAliveTime, TimeUnit unit, ThreadFactory threadFactory) {
-        return new ConcurrentMapAsync(corePoolSize, maximumPoolSize, keepAliveTime, unit, threadFactory);
-    }
-
-    /**
-     * 创建Map并发执行对象（异步）
-     * @param corePoolSize 核心线程数
-     * @param maximumPoolSize 最大线程数
-     * @param keepAliveTime 最大空闲时间
-     * @param unit 最大空闲时间的单位
-     * @return
-     */
-    public static ConcurrentMapAsync getConcurrentMapAsync(int corePoolSize, int maximumPoolSize, long keepAliveTime, TimeUnit unit) {
-        return new ConcurrentMapAsync(corePoolSize, maximumPoolSize, keepAliveTime, unit);
-    }
-
-    /**
-     * 创建Map并发执行对象（异步）
-     * @param corePoolSize 核心线程数
-     * @param maximumPoolSize 最大线程数
-     * @return
-     */
-    public static ConcurrentMapAsync getConcurrentMapAsync(int corePoolSize, int maximumPoolSize) {
-        return new ConcurrentMapAsync(corePoolSize, maximumPoolSize, 1, TimeUnit.MINUTES);
+    public static ConcurrentMapAsync getConcurrentMapAsync() {
+        return new ConcurrentMapAsync();
     }
 
     /**
